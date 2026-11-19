@@ -1,0 +1,4 @@
+FROM tb4-humble
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-turtlebot4-viz ros-humble-rviz2 \
+    && rm -rf /var/lib/apt/lists/*

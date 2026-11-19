@@ -1,0 +1,2 @@
+FROM tb4-humble-slam
+RUN pip install --no-cache-dir openai

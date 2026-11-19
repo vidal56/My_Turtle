@@ -1,0 +1,4 @@
+FROM tb4-humble-viz
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-slam-toolbox ros-humble-teleop-twist-keyboard \
+    && rm -rf /var/lib/apt/lists/*

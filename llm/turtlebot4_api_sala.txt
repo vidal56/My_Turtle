@@ -1,0 +1,52 @@
+# Dock
+navigator.dock()
+# Undock
+navigator.undock()
+# Go to frente
+dest = destinations['frente']
+navigator.info('Moving to frente')
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+# Vá para o fundo da sala
+dest = destinations['fundo']
+navigator.info('Moving to fundo')
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+# Navigate to the middle of the room
+dest = destinations['meio']
+navigator.info('Moving to meio')
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+# Vá até a porta
+dest = destinations['porta']
+navigator.info('Moving to porta')
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+# Go back to the dock
+navigator.info('Returning to the dock')
+dest = destinations['doca']
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+navigator.dock()
+# Vá para o meio da sala e depois volte para a dock
+dest = destinations['meio']
+navigator.info('Moving to meio')
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+navigator.info('Returning to the dock')
+dest = destinations['doca']
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+navigator.dock()
+# Volte para a dock
+navigator.info('Returning to the dock')
+dest = destinations['doca']
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+navigator.dock()
+# Vá para a doca e dê dock
+navigator.info('Returning to the dock')
+dest = destinations['doca']
+goal = navigator.getPoseStamped(dest[0:2], dest[2])
+navigator.startToPose(goal)
+navigator.dock()
