@@ -107,11 +107,15 @@ def dock_now(navigator):
             break
         navigator.warn(f'DOCK_APPROACH falhou (tentativa {attempt}/3)')
         sleep(3)
-    navigator.dock()
-    if not navigator.getDockedStatus():
-        navigator.error('Falha ao dockar')
-        return False
-    return True
+    for attempt in range(1, 4):
+        navigator.dock()
+        if navigator.getDockedStatus():
+            return True
+        navigator.warn(f'Dock falhou (tentativa {attempt}/3); reaproximando')
+        sleep(3)
+        go_to(navigator, *DOCK_APPROACH)
+    navigator.error('Falha ao dockar')
+    return False
 
 
 def charge(navigator, battery_monitor, lock):
