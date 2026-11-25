@@ -15,7 +15,7 @@ for t in 1 2; do
   echo "  repetindo localization..."
 done
 echo "[2/3] pose inicial (dock):"
-"$REPO/scripts/pose.sh"
+"$REPO/scripts/pose.sh" $DOCK_POSE
 echo "[3/3] nav2..."
 for t in 1 2 3; do
   docker rm -f tb_nav2 >/dev/null 2>&1
