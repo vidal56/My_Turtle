@@ -36,7 +36,8 @@ ROUTE = [
     (-3.94, 0.62),
     (-4.03, 3.72),
     (-1.24, 4.36),
-    (-0.90, 7.09),
+    (-0.69, 4.84),  # porta, lado da sala (eixo ~84 graus)
+    (-0.51, 6.63),  # porta, lado do corredor
     (0.55, 7.79),
     (3.24, 8.65),
     (5.67, 9.26),
@@ -44,6 +45,8 @@ ROUTE = [
     (14.57, 12.48),
     (20.80, 14.90),
 ]
+# Volta: corredor -> porta (centralizado) -> sala
+RETURN_VIA = [(-0.51, 6.63), (-0.69, 4.84)]
 # 0.6 m "atras" da dock (dock em 0,0 com o robo olhando 0 grau), olhando para ela
 DOCK_APPROACH = ([-0.6, 0.0], 0)
 
@@ -86,6 +89,7 @@ def parse_args(argv):
     p.add_argument('--no-dock', action='store_true', help='sem dock/undock')
     p.add_argument('--resume', action='store_true', help='bateria baixa: carrega e retoma')
     p.add_argument('--first', type=int, default=0, help='usa so os N primeiros pontos')
+    p.add_argument('--dock-only', action='store_true', help='so vai para a dock e docka')
     p.add_argument('--loops', type=int, default=0, help='voltas (0 = infinito)')
     return p.parse_args(argv)
 
@@ -135,11 +139,13 @@ def charge(navigator, battery_monitor, lock):
 
 
 def patrol(navigator, battery_monitor, lock, args):
-    route = ROUTE[:args.first] if args.first else ROUTE
+    route = ROUTE[:args.first] if args.first else ROUTE + RETURN_VIA
     waypoints = build_waypoints(route)
 
     navigator._waitForNodeToActivate('amcl')
     navigator._waitForNodeToActivate('bt_navigator')
+    if args.dock_only:
+        return 0 if dock_now(navigator) else 1
 
     if not args.no_dock:
         if not navigator.getDockedStatus():
